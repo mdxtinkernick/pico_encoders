@@ -10,8 +10,8 @@ target_link_libraries(encoders_pio PRIVATE
         )
 
 # enable usb output, disable uart output
-pico_enable_stdio_usb(hello_usb 1)
-pico_enable_stdio_uart(hello_usb 0)
+pico_enable_stdio_usb(encoders_pio 1)
+pico_enable_stdio_uart(encoders_pio 0)
 
 pico_add_extra_outputs(encoders_pio)
 
