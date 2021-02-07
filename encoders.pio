@@ -1,0 +1,31 @@
+ .wrap_target
+    in pins, 2           ; read the two pins to get value
+    mov y, isr           ; put it in y to make comparison later
+    set isr, 0           ; clear values ready for next reading
+checking:
+    in pins, 2           ; read latest value
+    mov x, isr           ; mov to x to make comparison
+    jmp x!=y on_change   ; compare
+    jmp checking         ; check again if same
+on_change:
+    mov x, osr           ; move contents of osr to x - this is the count
+    mov osr, y           ; move previous value in osr in order get the single bit
+    out 1, y             ; get the individual bit
+    jmp y-- was_1        ; if its now zero it was 1
+    jmp pin dec          ; it was zero so if other pins 1 then dec
+    jmp inc              ; if you get here they were the same, so increment
+was_1:
+    jmp pin inc          ; same so inc, otherwise fall through and dec
+dec:
+    jmp x-- send         
+    send
+inc:
+    mov x, !x
+    jmp x-- fake          ; just need to dec and fall through
+fake:
+    mov x, !x             ; inc complete, fall through to send
+send:
+    mov isr, x            ; move count to isr
+    push                  ; send it out (also clears isr ready for next read)
+    mov osr, x            ; move count to osr so can use x and y for comparison again
+.wrap
