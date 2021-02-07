@@ -1,8 +1,11 @@
- .wrap_target
+ .program encoders
+
+.wrap_target
     in pins, 2           ; read the two pins to get value
     mov y, isr           ; put it in y to make comparison later
 checking:
-    set isr, 0           ; clear values ready for next reading
+    set x, 0
+    mov isr, x           ; clear values ready for next reading
     in pins, 2           ; read latest value
     mov x, isr           ; mov to x to make comparison
     jmp x!=y on_change   ; compare
@@ -10,7 +13,7 @@ checking:
 on_change:
     mov x, osr           ; move contents of osr to x - this is the count
     mov osr, y           ; move previous value in osr in order get the single bit
-    out 1, y             ; get the individual bit
+    out y, 1             ; get the individual bit
     jmp y-- was_1        ; if its now zero it was 1
     jmp pin dec          ; it was zero so if other pins 1 then dec
     jmp inc              ; if you get here they were the same, so increment
@@ -18,7 +21,7 @@ was_1:
     jmp pin inc          ; same so inc, otherwise fall through and dec
 dec:
     jmp x-- send         
-    send
+    jmp send
 inc:
     mov x, !x
     jmp x-- fake          ; just need to dec and fall through
@@ -45,3 +48,4 @@ static inline void encoders_program_init(PIO pio, uint sm, uint offset, uint pin
     pio_sm_init(pio, sm, offset, &c);
     pio_sm_set_enabled(pio, sm, true);
 }
+%}
