@@ -1,8 +1,8 @@
  .wrap_target
     in pins, 2           ; read the two pins to get value
     mov y, isr           ; put it in y to make comparison later
-    set isr, 0           ; clear values ready for next reading
 checking:
+    set isr, 0           ; clear values ready for next reading
     in pins, 2           ; read latest value
     mov x, isr           ; mov to x to make comparison
     jmp x!=y on_change   ; compare
