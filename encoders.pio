@@ -29,3 +29,19 @@ send:
     push                  ; send it out (also clears isr ready for next read)
     mov osr, x            ; move count to osr so can use x and y for comparison again
 .wrap
+
+% c-sdk {
+static inline void encoders_program_init(PIO pio, uint sm, uint offset, uint pin) {
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);
+    pio_gpio_init(pio, pin);
+    gpio_pull_up(pin);
+
+    pio_sm_config c = encoders_program_get_default_config(offset);
+    sm_config_set_in_pins(&c, pin); // for WAIT, IN
+    sm_config_set_jmp_pin(&c, pin); // for JMP
+    // Shift to right, autopull disabled
+    sm_config_set_in_shift(&c, true, false, 2);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
