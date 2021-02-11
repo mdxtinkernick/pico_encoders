@@ -8,7 +8,7 @@
 
 
 
-#define PIO_ENCODER_PIN 3
+#define PIO_ENCODER_PIN 1
 
 int main() {
     stdio_init_all();
@@ -20,7 +20,7 @@ int main() {
     while (true){
         if (pio_sm_get_rx_fifo_level(pio, sm)>0){
             uint32_t val = pio_sm_get(pio, sm);
-            printf("%d", val);
+            printf("%lu\n", val);
         }
     }
 }
