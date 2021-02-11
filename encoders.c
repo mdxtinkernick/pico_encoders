@@ -8,7 +8,7 @@
 
 
 
-#define PIO_ENCODER_PIN 1
+#define PIO_ENCODER_PIN 14
 
 int main() {
     stdio_init_all();
