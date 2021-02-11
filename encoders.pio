@@ -44,7 +44,7 @@ static inline void encoders_program_init(PIO pio, uint sm, uint offset, uint pin
     sm_config_set_in_pins(&c, pin); // for WAIT, IN
     sm_config_set_jmp_pin(&c, pin); // for JMP
     // Shift to right, autopull disabled
-    sm_config_set_in_shift(&c, true, false, 2);
+    sm_config_set_in_shift(&c, false, false, 2);
 
     pio_sm_init(pio, sm, offset, &c);
     pio_sm_set_enabled(pio, sm, true);
