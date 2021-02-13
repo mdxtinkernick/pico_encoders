@@ -1,12 +1,7 @@
 #include <stdio.h>
-
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
 #include "encoders.pio.h"
-
-
-
-
 
 #define PIO_ENCODER_PIN 14
 
