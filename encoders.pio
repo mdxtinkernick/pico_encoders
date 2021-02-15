@@ -1,4 +1,4 @@
- .program encoders
+.program encoders
 
 .wrap_target
     in pins, 2           ; read the two pins to get value
@@ -14,23 +14,23 @@ on_change:
     mov x, osr           ; move contents of osr to x - this is the count
     mov osr, y           ; move previous value in osr in order get the single bit
     out y, 1             ; get the individual bit
-    jmp y-- was_zero        ; if its now zeronon zero then it was zero before
+    jmp y-- was_zero     ; if its now non zero then it was zero before
     jmp pin inc          ; it was 1 so if other pins 1 then inc
     jmp dec              ; otherwise dec
 was_zero:
-    jmp pin dec         ; different so dec, otherwise fall through and inc
+    jmp pin dec          ; different so dec, otherwise fall through and inc
 inc:
     mov x, !x
-    jmp x-- fake          ; just need to dec and fall through
+    jmp x-- fake         ; just need to dec and fall through
 fake:
-    mov x, !x             ; inc complete
+    mov x, !x            ; inc complete
     jmp send
 dec:
-    jmp x-- send          ; jump to send, or fall through to send - really just dec      
+    jmp x-- send         ; jump to send, or fall through to send - really just dec      
 send:
-    mov isr, x            ; move count to isr
-    push                  ; send it out (also clears isr ready for next read)
-    mov osr, x            ; move count to osr so can use x and y for comparison again
+    mov isr, x           ; move count to isr
+    push                 ; send it out (also clears isr ready for next read)
+    mov osr, x           ; move count to osr so can use x and y for comparison again
 .wrap
 
 % c-sdk {
