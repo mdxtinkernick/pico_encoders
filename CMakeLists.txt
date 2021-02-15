@@ -8,6 +8,7 @@ target_link_libraries(encoders_pio PRIVATE
         pico_stdlib
         hardware_pio
         hardware_dma
+        hardware_irq
         )
 
 # enable usb output, disable uart output
