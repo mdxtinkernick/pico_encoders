@@ -14,7 +14,7 @@ on_change:
     mov x, osr           ; move contents of osr to x - this is the count
     mov osr, y           ; move previous value in osr in order get the single bit
     out y, 1             ; get the individual bit
-    jmp y-- was_zero        ; if its now zeronon zero then it was zero before
+    jmp y-- was_zero        ; if its now non zero then it was zero before
     jmp pin inc          ; it was 1 so if other pins 1 then inc
     jmp dec              ; otherwise dec
 was_zero:
