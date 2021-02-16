@@ -11,7 +11,6 @@ uint number_of_encoders =8;
 
 PIO pio;
 PIO pio2;
-uint reg2 = 0;
 
 void dma_handler() {
     uint i = 1;
