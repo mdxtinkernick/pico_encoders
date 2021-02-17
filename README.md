@@ -1,6 +1,6 @@
 Code to read encoders on a pi pico using pio state machine, incrementing and decrementing a count on all four transitions based on the direction of movement andtransferring the count values to a variable on the core using dma.
 
-Introductory video is here https://www.play.mdx.ac.uk/media/pio+encoders+on+pi+pico/1_hjqrrr1d
+Introductory video is here https://www.play.mdx.ac.uk/media/pio+encoders+on+pi+pico/1_hjqrrr1d (the camera providing the view of boards is of course a pihq on a Pi A+ https://github.com/mdxtinkernick/camera_py/blob/master/README.md)
 
 I will add one talking through the assembler code soon.
 
