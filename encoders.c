@@ -5,8 +5,7 @@
 #include "hardware/irq.h"
 #include "encoders.pio.h"
 
-
-uint encoder_pin[] = {14, 16, 18, 20, 2, 4, 6, 8};
+uint encoder_pin[] = {0, 2, 4, 6, 8, 10, 12, 14};
 uint number_of_encoders =8;
 
 PIO pio;
@@ -24,7 +23,7 @@ void dma_handler() {
         dma_channel_set_read_addr(interrupt_channel, &pio->rxf[interrupt_channel], true);
     }else{
         dma_channel_set_read_addr(interrupt_channel, &pio2->rxf[interrupt_channel%4], true);
-    } 
+    }
 }
 
 int main() {
@@ -40,15 +39,18 @@ int main() {
     
     for (int i = 0; i<number_of_encoders; i++){
         if (i<4){
-            encoders_program_init(pio, i, offset, encoder_pin[i]);
+            encoders_program_init(pio, i, offset, encoder_pin[i], false);
         }else{
-            encoders_program_init(pio2, i%4, offset2, encoder_pin[i]);
+            encoders_program_init(pio2, i%4, offset2, encoder_pin[i], false);
         }  
         dma_channel_config c = dma_channel_get_default_config(i);
         channel_config_set_read_increment(&c, false);
         channel_config_set_write_increment(&c, false);
-        channel_config_set_dreq(&c, pio_get_dreq(pio, i, false));
+        
+        
+        
         if (i<4){
+            channel_config_set_dreq(&c, pio_get_dreq(pio, i, false));
             dma_channel_configure(i, &c,
                 &capture_buf[i],        // Destinatinon pointer
                 &pio->rxf[i],      // Source pointer
@@ -56,6 +58,7 @@ int main() {
                 true                // Start immediately
             );
         }else{
+            channel_config_set_dreq(&c, pio_get_dreq(pio2, i%4, false));
             dma_channel_configure(i, &c,
                 &capture_buf[i],        // Destinatinon pointer
                 &pio2->rxf[i%4],      // Source pointer
