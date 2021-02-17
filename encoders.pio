@@ -34,12 +34,14 @@ send:
 .wrap
 
 % c-sdk {
-static inline void encoders_program_init(PIO pio, uint sm, uint offset, uint pin) {
+static inline void encoders_program_init(PIO pio, uint sm, uint offset, uint pin, bool pullup) {
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 2, false);
     pio_gpio_init(pio, pin);
     pio_gpio_init(pio, pin+1);
-    gpio_pull_up(pin);
-    gpio_pull_up(pin+1);
+    if (pullup){
+        gpio_pull_up(pin);
+        gpio_pull_up(pin+1);
+    }
 
     pio_sm_config c = encoders_program_get_default_config(offset);
     sm_config_set_in_pins(&c, pin);
