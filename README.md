@@ -2,9 +2,15 @@ Code to read encoders on a pi pico using pio state machine, incrementing and dec
 
 Introductory video is here https://www.play.mdx.ac.uk/media/pio+encoders+on+pi+pico/1_hjqrrr1d
 
+I will add one talking through the assembler code soon.
 
+The main branch is the original simple code, getting the hang of how to get things to work, runs one state machine and on the c side polls the fifo to see when an update is available and then reads it. After that development is on seperate branches, and most development is on the c side of the code.
 
-Encoders are attached to pins 0+1, 2+3, 4+5, 6+7, 8+9 10+11, 12+13 14+15, 16+17 (change values in encoder_pins[] at top of encoders.c to change these)
+multi points four state machine in one POI to the same code, and still checks whether values are in the fifos waiting to be pulled.
+
+dma implemented dma transfers so the c code just has an array of values that update automatically. This was then extended across both PIOs to get 8 channels.
+
+Encoders are attached to pins 0+1, 2+3, 4+5, 6+7, 8+9 10+11, 12+13 14+15, 16+17 in the 8 channel version (change values in encoder_pins[] at top of encoders.c to change these)
 
 I believe the flip-flop debounce logic is enabled by default on input pins, if so it was not able to cope with the bounce on dial style switch based encoders I tried, would need hardware debouncing. Is fine with optical or magnetic ones commonly used on motors. 
 
