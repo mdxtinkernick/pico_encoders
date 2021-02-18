@@ -1,5 +1,7 @@
 Code to read encoders on a pi pico using pio state machine, incrementing and decrementing a count on all four transitions based on the direction of movement andtransferring the count values to a variable on the core using dma.
 
+The project has been amended so that it shoild not be put in the pico-examples folder any more outside of the the pico-examples folder. It should now be cloned inside the pico folder. I have been testing it on a Pi400 and the PICO_SDK_PATH is hard coded inside the CMakesList.txt file. You will need to the path in the file to reflect your setup if it is different.
+
 Introductory video is here https://www.play.mdx.ac.uk/media/pio+encoders+on+pi+pico/1_hjqrrr1d (the camera providing the view of boards is of course a pihq on a Pi A+ https://github.com/mdxtinkernick/camera_py/blob/master/README.md)
 
 I will add one talking through the assembler code soon.
@@ -16,7 +18,7 @@ I believe the flip-flop debounce logic is enabled by default on input pins, if s
 
 Currently testing with simulated encoder signalfor multiple encoders from another micro to enable single stepping through states and sending accurate numbers of pulses to check it is working. Tested with real encoder on 1 input, simulated encoders for 4 and 8. Tested fine with transitions down to 2.2 uS apart so far.
 
-To build succesfully the project needs to be put in the pico-examples folder structure in the pio folder, and add it to the list of subdirectories in the CMakeList.txt file inside the pio folder so it gets built
+I have been building the project using cmake and make commands in the terminal.
 
 Assumption in the assembler code.
 
