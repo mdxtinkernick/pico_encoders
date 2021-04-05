@@ -54,7 +54,7 @@ int main() {
             dma_channel_configure(i, &c,
                 &capture_buf[i],        // Destinatinon pointer
                 &pio->rxf[i],      // Source pointer
-                0x10, // Number of transfers
+                0xffff, // Number of transfers
                 true                // Start immediately
             );
         }else{
@@ -62,7 +62,7 @@ int main() {
             dma_channel_configure(i, &c,
                 &capture_buf[i],        // Destinatinon pointer
                 &pio2->rxf[i%4],      // Source pointer
-                0x10, // Number of transfers
+                0xffff, // Number of transfers
                 true                // Start immediately
             );
         }
